@@ -12,20 +12,9 @@ else {
 		$get_user_email = mysql_fetch_assoc($result);
 			$uname_db = $get_user_email['firstName'];
 }
-if (isset($_REQUEST['keywords'])) {
-
-	$epid = mysql_real_escape_string($_REQUEST['keywords']);
-	if($epid != "" && ctype_alnum($epid)){
-		
-	}else {
-		header('location: index.php');
-	}
-}else {
-	header('location: index.php');
-}
 
 $search_value = "";
-$search_value = trim($_GET['keywords']);
+
 ?>
 
 
@@ -63,15 +52,13 @@ $search_value = trim($_GET['keywords']);
 				</a>
 			</div>
 			<div class="">
-			<div id="srcheader">
-				<form id="newsearch" method="get" action="search.php">
-				        <?php 
-				        	echo '<input type="text" class="srctextinput" name="keywords" size="21" maxlength="120"  placeholder="Search Here..." value="'.$search_value.'"><input type="submit" value="search" class="srcbutton" >';
-				         ?>
-				</form>
-			<div class="srcclear"></div>
+				<div id="srcheader">
+					<form id="newsearch" method="get" action="http://www.google.com">
+					        <input type="text" class="srctextinput" name="q" size="21" maxlength="120"  placeholder="Search Here..."><input type="submit" value="search" class="srcbutton" >
+					</form>
+				<div class="srcclear"></div>
+				</div>
 			</div>
-		</div>
 		</div>
 		<div class="categolis">
 			<table>
@@ -81,7 +68,7 @@ $search_value = trim($_GET['keywords']);
 					</th>
 					<th><a href="addproduct.php" style="text-decoration: none;color: #ddd;padding: 4px 12px;background-color: #c7587e;border-radius: 12px;">Add Product</a></th>
 					<th><a href="newadmin.php" style="text-decoration: none;color: #ddd;padding: 4px 12px;background-color: #c7587e;border-radius: 12px;">New Admin</a></th>
-					<th><a href="allproducts.php" style="text-decoration: none;color: #ddd;padding: 4px 12px;background-color: #c7587e;border-radius: 12px;">All Products</a></th>
+					<th><a href="allproducts.php" style="text-decoration: none;color: #ddd;padding: 4px 12px;background-color: #24bfae;border-radius: 12px;">All Products</a></th>
 					<th><a href="orders.php" style="text-decoration: none;color: #ddd;padding: 4px 12px;background-color: #c7587e;border-radius: 12px;">Orders</a></th>
 				</tr>
 			</table>
@@ -102,10 +89,8 @@ $search_value = trim($_GET['keywords']);
 				</tr>
 				<tr>
 					<?php include ( "../inc/connect.inc.php");
-					$search_value = trim($_GET['keywords']);
-					$query = "SELECT * FROM products WHERE pName like '%$search_value%'  ORDER BY id DESC";
+					$query = "SELECT * FROM products ORDER BY id DESC";
 					$run = mysql_query($query);
-					if ( $total = mysql_num_rows($run)) {
 					while ($row=mysql_fetch_assoc($run)) {
 						$id = $row['id'];
 						$pName = substr($row['pName'], 0,50);
@@ -133,9 +118,7 @@ $search_value = trim($_GET['keywords']);
 									</a>
 								</div>' ?></th>
 				</tr>
-				<?php }
-					}
-				 ?>
+				<?php } ?>
 			</table>
 		</div>
 	</body>
